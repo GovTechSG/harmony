@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 section_pattern = re.compile(r'\s{3,}SECTION M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})')
 chapter_pattern = re.compile(r'\n\s+Chapter \d+\s+\n')
@@ -21,6 +22,44 @@ def split_into_sections_and_chapters(input_file_path):
         if current_section_content:
             section_counter += 1
             split_section_into_chapters(section_counter, current_section_content)
+
+
+def define_sections(input_file_path):
+    section_counter = 0  # Counter for the section files
+    current_section: Optional[str] = None  # Holds the content of the current parsing section
+
+    with open(input_file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            if section_pattern.match(line):
+                if current_section is not None:
+                    section_counter += 1
+                    first_chapter_or_subchapter = chapter_pattern.search(current_section) or subchapter_pattern.search(current_section)
+                    if first_chapter_or_subchapter:
+                        write_section_to_file(section_counter, current_section[:first_chapter_or_subchapter.start()])
+                    else:
+                        write_section_to_file(section_counter, current_section)
+                    current_section = line
+                else:
+                    current_section = line
+            elif current_section is not None:
+                if chapter_pattern.match(line):
+                    section_counter += 1
+                    first_chapter_or_subchapter = chapter_pattern.search(current_section) or subchapter_pattern.search(current_section)
+                    if first_chapter_or_subchapter:
+                        write_section_to_file(section_counter, current_section[:first_chapter_or_subchapter.start()])
+                    else:
+                        write_section_to_file(section_counter, current_section)
+                    current_section = None
+                else:
+                    current_section += line
+
+        if current_section is not None:
+            section_counter += 1
+            first_chapter_or_subchapter = chapter_pattern.search(current_section) or subchapter_pattern.search(current_section)
+            if first_chapter_or_subchapter:
+                write_section_to_file(section_counter, current_section[:first_chapter_or_subchapter.start()])
+            else:
+                write_section_to_file(section_counter, current_section)
 
 
 def split_section_into_chapters(section_counter, section_content):
@@ -72,7 +111,15 @@ def write_chapter_to_file(section_number, chapter_number, chapter_title, chapter
     print(f'Chapter {chapter_number} of Section {section_number} has been saved to {chapter_file_name}')
 
 
+def write_section_to_file(section_number, section_content):
+    section_file_name = f'Section_{section_number}.txt'
+    with open(section_file_name, 'w', encoding='utf-8') as section_file:
+        section_file.write(section_content)
+    print(f'Section {section_number} has been saved to {section_file_name}')
+
+
 if __name__ == "__main__":
     # Replace 'your_input_file.txt' with the path to your text file
     input_file_path = 'stcced.txt'
+    define_sections(input_file_path)
     split_into_sections_and_chapters(input_file_path)
