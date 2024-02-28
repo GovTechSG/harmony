@@ -2,10 +2,10 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from glob import glob
 
-from openai.lib.azure import AzureOpenAI
+from openai import OpenAI
 from tqdm import tqdm
 
-client = AzureOpenAI()
+client = OpenAI()
 
 PROMPT = """
 Convert this description into a graph dot file. 

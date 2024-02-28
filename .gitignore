@@ -284,4 +284,6 @@ pyrightconfig.json
 .aider*
 
 scripts/*.txt
-scripts/*.dot
+*.dot
+
+.DS_Store
