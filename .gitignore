@@ -284,3 +284,4 @@ pyrightconfig.json
 .aider*
 
 scripts/*.txt
+scripts/*.dot

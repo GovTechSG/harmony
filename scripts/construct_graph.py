@@ -1,10 +1,11 @@
+import os
+from concurrent.futures import ThreadPoolExecutor
 from glob import glob
+
+from openai.lib.azure import AzureOpenAI
 from tqdm import tqdm
-from count_tokens import num_tokens_from_messages
 
-from openai import OpenAI
-
-client = OpenAI()
+client = AzureOpenAI()
 
 PROMPT = """
 Convert this description into a graph dot file. 
@@ -33,7 +34,17 @@ strict digraph "" {
 
 
 def construct_graph_file(chapter_content: str):
-    messages = construct_messages(chapter_content)
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant who converts Descriptions of HS Codes into NetworkX Dotfile "
+                       "Graphs."
+        },
+        {
+            "role": "user",
+            "content": chapter_content + '\n\n' + PROMPT
+        }
+    ]
 
     response = client.chat.completions.create(
         model="gpt-4-1106-preview",
@@ -48,31 +59,20 @@ def construct_graph_file(chapter_content: str):
     return response.choices[0].message.content
 
 
-def construct_messages(chapter_content: str):
-    return [
-        {
-            "role": "system",
-            "content": "You are a helpful assistant who converts Descriptions of HS Codes into NetworkX Dotfile "
-                       "Graphs."
-        },
-        {
-            "role": "user",
-            "content": chapter_content + '\n\n' + PROMPT
-        }
-    ]
+def process_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            chapter_content = file.read()
+        dot_content = construct_graph_file(chapter_content)
+        dot_file_path = file_path.rsplit('.', 1)[0] + '.dot'
+        with open(dot_file_path, 'w') as file:
+            file.write(dot_content)
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
 
 
 if __name__ == '__main__':
-    for file_path in tqdm(sorted(glob('*.txt')), desc="Processing files", unit="file"):
-        try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                content = file.read()
-            messages = construct_messages(content)
-            num_tokens = num_tokens_from_messages(messages)
-            print(f'File: {file_path}, Num Tokens: {num_tokens}')
-        except Exception as e:
-            print(f'An error occurred while processing {file_path}:', str(e))
-        # dot_content = construct_graph_file(chapter_content)
-        # dot_file_path = file_path.rsplit('.', 1)[0] + '.dot'
-        # with open(dot_file_path, 'w') as file:
-        #     file.write(dot_content)
+    all_files = sorted(glob('Section_*_Chapter_*_Subchapter_*.txt'))
+    files = [f for f in all_files if not os.path.exists(f.rsplit('.', 1)[0] + '.dot')]
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        list(tqdm(executor.map(process_file, files), total=len(files), desc="Processing files", unit="file", miniters=1))
