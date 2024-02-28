@@ -1,4 +1,5 @@
 import os.path
+import re
 
 import PyPDF2
 import requests
@@ -6,6 +7,8 @@ from tqdm import tqdm
 
 STCCED_LOCAL_PATH = '/tmp/stcced2022.pdf'
 STCCED_2022_URL = 'https://file.go.gov.sg/stcced2022.pdf'
+TABLE_HEADER_PATTERN = re.compile(
+    r'\s*HEADING\s+SUBHEADING\s+DESCRIPTION\s+UNIT\s+OF\s+QUANTITY\s+CUSTOMS\s+DUTY\s+EXCISE\s+DUTY\s+FULL\s+\(5\)\s+PREF\s+\(6\)\s+\(1\)\s+\(2\)\s+\(3\)\s+\(4\)\s+\(7\)\s*\d*')
 
 
 def download_file(url: str, local_filename: str):
@@ -28,7 +31,9 @@ def main():
 
     with open('stcced.txt', 'w') as f:
         for page in tqdm(reader.pages[15:]):
-            f.write(page.extract_text())
+            text = page.extract_text()
+            text = re.sub(TABLE_HEADER_PATTERN, '', text)
+            f.write(text)
 
 
 if __name__ == '__main__':
