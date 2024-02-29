@@ -1,25 +1,25 @@
-annotated-types==0.6.0 ; python_version >= "3.11" and python_version < "4.0"
-anyio==4.3.0 ; python_version >= "3.11" and python_version < "4.0"
-certifi==2024.2.2 ; python_version >= "3.11" and python_version < "4.0"
-charset-normalizer==3.3.2 ; python_version >= "3.11" and python_version < "4.0"
-colorama==0.4.6 ; python_version >= "3.11" and python_version < "4.0" and platform_system == "Windows"
-distro==1.9.0 ; python_version >= "3.11" and python_version < "4.0"
-h11==0.14.0 ; python_version >= "3.11" and python_version < "4.0"
-httpcore==1.0.4 ; python_version >= "3.11" and python_version < "4.0"
-httpx==0.27.0 ; python_version >= "3.11" and python_version < "4.0"
-idna==3.6 ; python_version >= "3.11" and python_version < "4.0"
-neonx==0.1.1 ; python_version >= "3.11" and python_version < "4.0"
-networkx==3.2.1 ; python_version >= "3.11" and python_version < "4.0"
-openai==1.12.0 ; python_version >= "3.11" and python_version < "4.0"
-pydantic-core==2.16.3 ; python_version >= "3.11" and python_version < "4.0"
-pydantic==2.6.2 ; python_version >= "3.11" and python_version < "4.0"
-pydot==2.0.0 ; python_version >= "3.11" and python_version < "4.0"
-pygraphviz==1.12 ; python_version >= "3.11" and python_version < "4.0"
-pyparsing==3.1.1 ; python_version >= "3.11" and python_version < "4.0"
-regex==2023.12.25 ; python_version >= "3.11" and python_version < "4.0"
-requests==2.31.0 ; python_version >= "3.11" and python_version < "4.0"
-sniffio==1.3.1 ; python_version >= "3.11" and python_version < "4.0"
-tiktoken==0.6.0 ; python_version >= "3.11" and python_version < "4.0"
-tqdm==4.66.2 ; python_version >= "3.11" and python_version < "4.0"
-typing-extensions==4.10.0 ; python_version >= "3.11" and python_version < "4.0"
-urllib3==2.2.1 ; python_version >= "3.11" and python_version < "4.0"
+annotated-types==0.6.0 
+anyio==4.3.0 
+certifi==2024.2.2 
+charset-normalizer==3.3.2 
+colorama==0.4.6 
+distro==1.9.0 
+h11==0.14.0 
+httpcore==1.0.4 
+httpx==0.27.0 
+idna==3.6 
+neonx==0.1.1 
+networkx==3.2.1 
+openai==1.12.0 
+pydantic-core==2.16.3 
+pydantic==2.6.2 
+pydot==2.0.0 
+pygraphviz==1.12 
+pyparsing==3.1.1 
+regex==2023.12.25 
+requests==2.31.0 
+sniffio==1.3.1 
+tiktoken==0.6.0 
+tqdm==4.66.2 
+typing-extensions==4.10.0 
+urllib3==2.2.1
