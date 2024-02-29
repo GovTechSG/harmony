@@ -2,6 +2,8 @@
 
 Harmony uses LLMs and Graph Databases to map Harmonised System Codes to product descriptions.
 
+https://blog.adhikary.net/matching-hs-codes-in-2024-traversing-the-customs-space
+
 ## Initialising Dataset
 
 ### Installation
