@@ -15,8 +15,8 @@ Ensure your system has Python 3.11+ and Poetry Package Manager installed.
 poetry install
 ```
 
-### Preparing the dataset
+### Running the Demo Server
 
-1. Run `load_stcced.py` to download and process the 'Singapore Trade Classification Customs and Excise Duties (STCCED) 
-   2022' file. This outputs `stcced.txt`.
-2. Run `split_stcced.py` to split the `stcced.txt` file into Sections, Chapters and Subchapters.
+```shell
+poetry run streamlit run demo.py
+```
