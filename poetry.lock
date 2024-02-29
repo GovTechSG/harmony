@@ -515,6 +515,20 @@ files = [
 ]
 
 [[package]]
+name = "neonx"
+version = "0.1.1"
+description = "Handles conversion of date from NetworkX graph to Neo4j"
+optional = false
+python-versions = "*"
+files = [
+    {file = "neonx-0.1.1.tar.gz", hash = "sha256:03b9842cb72649603966609bf6a89c2b9890b87f9973fde4116d44873991b46f"},
+]
+
+[package.dependencies]
+networkx = "*"
+requests = "*"
+
+[[package]]
 name = "networkx"
 version = "3.2.1"
 description = "Python package for creating and manipulating graphs and networks"
@@ -1711,4 +1725,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b0997bd1b542fd3cd6252ad298027a4213445ce940cea9af02a66c18c4a38676"
+content-hash = "4ff668880a19b08b00c94675958f9347a03404a2224469c79b895d2920b85c97"

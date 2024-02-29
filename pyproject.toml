@@ -14,6 +14,7 @@ networkx = "^3.2.1"
 pygraphviz = "^1.12"
 openai = "^1.12.0"
 pydot = "^2.0.0"
+neonx = "^0.1.1"
 
 
 [tool.poetry.group.parsing.dependencies]
